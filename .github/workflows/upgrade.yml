@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # when a new commit is pushed to master
+  push:
+    branches:
+      - master
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build: 
+    name: 'upgrade to the latest version'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        echo 'start installing'
+        npm install
+        echo 'start deploying script'
+        npx hardhat run --network rinkeby ./scripts/sample-script.js
+      env: 
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
